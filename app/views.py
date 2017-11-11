@@ -1,8 +1,9 @@
 from flask import render_template, redirect
 from flask import request
 from flask_login import login_user, logout_user, login_required
-from models import User
 from app import app
+from app.models import User
+
 from . import mysql
 #sample user
 user = User('admin','password')
