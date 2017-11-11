@@ -41,3 +41,20 @@ def logout():
 @login_required
 def home(username):
     return "Username: "+username
+
+	
+@app.route("/bids/<pname>")
+def bids(pname):
+	#fetch details of pname and send it in this json
+	project = {'name':pname}
+	return render_template('bid.html', project = project)
+	
+@app.route("/makebid/<pname>")
+def makebid(pname):
+	#get required details needed for the project and accordingly populate the form queries
+	project = {'name':pname}
+	return render_template('makebid.html', project = project)
+	
+@app.route("/bidplaced", methods=['POST'])
+def bidplaced():
+	return "A"
