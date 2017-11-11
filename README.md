@@ -1,8 +1,8 @@
 GTMS - Government Tender Management System
 
 
-### Installation Procedure
-## Dependencies
+## Installation Procedure
+### Dependencies
 Assuming you have python3 and pip3 already installed
 1. Install flask
 ```
