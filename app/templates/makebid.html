@@ -3,12 +3,16 @@
 <head><title>BID</title>
 	<link rel="stylesheet" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static',filename='css/w3.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/fullpage.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/index.css') }}">
 	<script src ="{{ url_for('static',filename='js/jquery-3.2.0.min.js') }}"></script>
 	<script>
 	function place(){
-		data1 = '1'
-		data2 = '2'
-		data = {'A':data1, 'B':data2}
+		data1 = document.getElementById('c_id').value
+		data2 = document.getElementById('t_num').value
+		data3 = document.getElementById('cost').value
+		
+		data = {'c_id':data1, 't_num':data2, 'cost':data3}
 		$.ajax({
 			url: "/bidplaced",
 			data:  JSON.stringify(data),
@@ -28,18 +32,50 @@
 	</script>
 </head>
 <body>
-	<form>
-  <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="text" class="form-control" id="email">
-  </div>
-  <div class="form-group">
-    <label for="pwd">Password:</label>
-    <input type="text" class="form-control" id="pwd">
-  </div>
+	<body bgcolor="#c7d0d9">
 
-  <button type="button" class="btn btn-default" onclick="place()">Submit</button>
-</form>
+<div id="container">
+	<img src="{{ url_for('static',filename='etender.png') }}" height=70px width=400px>    
+	<div class="nav">
+	  <ul>
+		<li class="active"> <a href="/index.html">&nbsp&nbsp&nbsp Home &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
+		<li> <a href="http://localhost/regform.php">   &nbsp&nbsp&nbsp Registration &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp| </a></li>
+		<li> <a href="policy.html">&nbsp&nbsp&nbsp Payment Guidelines & Policies &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
+		<li> <a href="project_login.html" target="_blank">&nbsp&nbsp&nbsp Projects &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
+		
+	  </ul>
+	</div>
+</div>
+
+<center>
+<div id = "bid">
+  <form action="/action_page.php">
+    <label for="Contractor ID">Contractor ID</label>
+    <input type="text" id="c_id"  placeholder="Enter Contractor id" >
+
+    <label for="Tender Number">Tender Number</label>
+    <input type="text" id="t_num"  placeholder="Enter Tender Number">
+	
+	<label for="Bidding Cost">Bidding cost</label>
+    <input type="number" id="cost"  placeholder="Enter Bidding Cost">
+  
+    <input type="button" value="Submit" onclick="place()"></br></br>
+  </form>
+</div>
+</center>
+
+</br></br>
+
+<div class="footer">
+<ul>
+  <li> Copyright. All rights reserved. &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+  <li><a href="tandc.html" target="_blank"> Terms & conditions&nbsp&nbsp&nbsp&nbsp&nbsp| </a></li>
+  <li><a href="e-disclaimer.html" target="_blank"> &nbsp&nbsp&nbsp&nbspDisclaimer </a></li>
+</ul>
+</div>
+
+
+</div>   
 
 </body>
 </html>
