@@ -2,7 +2,7 @@ from flask import render_template, redirect, jsonify
 from flask import request
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app
-from app.models import User, Database
+from app.models import User, Database, load_user
 
 from . import mysql
 
@@ -29,11 +29,12 @@ def signup():
 
 @app.route('/login', methods=['POST'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
     #verify user
     if Database.login(username, password):
-        user = User(username, access)
+        user = load_user(username)
         login_user(user)
         return redirect("/"+username)
     else:
