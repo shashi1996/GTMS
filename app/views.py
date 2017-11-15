@@ -1,12 +1,10 @@
-from flask import render_template, redirect
+from flask import render_template, redirect, jsonify
 from flask import request
-from flask_login import login_user, logout_user, login_required
+from flask_login import login_user, logout_user, login_required, current_user
 from app import app
-from app.models import User
+from app.models import User, Database
 
 from . import mysql
-#sample user
-user = User('admin','password')
 
 
 @app.route('/')
@@ -17,20 +15,30 @@ def index():
 def about():
     return render_template("about.html")
 
+@app.route('/signup',methods=['GET','POST'])
+def signup():
+    if request.method == 'GET':
+        return "signup form"
+    else:
+        #verify details
+        data = request.get_json()
+        if Database.addUser(data):
+            return "User added successfully"
+        else:
+            return "Error"
+
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
     password = request.form['password']
     #verify user
-    cur = mysql.connection.cursor()
-    cur.execute("Select * from login where username='"+username+"' and password='"+password+"'")
-    data = cur.fetchone()
-    if data:
+    if Database.login(username, password):
+        user = User(username, access)
         login_user(user)
         return redirect("/"+username)
     else:
-        return abort(401)
-
+        return "Incorrect credentials. Please try again."
+   
 @app.route("/logout")
 @login_required
 def logout():
@@ -40,7 +48,8 @@ def logout():
 @app.route("/<username>")
 @login_required
 def home(username):
-    return "Username: "+username
+    data = Database.getUser(username)
+    return jsonify(data)
 
 	
 @app.route("/bids/<pname>")
@@ -58,3 +67,24 @@ def makebid(pname):
 @app.route("/bidplaced", methods=['POST'])
 def bidplaced():
 	return "A"
+
+@app.route("/addproject", methods=['POST'])
+@login_required
+def addProject():
+    if current_user.access == "admin":
+        projDetails = request.get_json()
+        #verify Data parameters
+        if Database.addProject(data):
+        #if successful
+            return "Data saved successfully"
+        else:
+            return "Error saving data"
+    return "Access denied" 
+
+@app.route("/project/<project>", methods=['GET'])
+def showProject(project):
+    data = Database.getProject(project)
+    if data is not False:
+        return jsonify(data)
+    else:
+        return "Project not found"
