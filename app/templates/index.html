@@ -5,11 +5,32 @@
     <meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="{{url_for ('static',filename='css/index.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{url_for ('static',filename='css/fullpage.css')}}">
+  <script src ="{{ url_for('static',filename='js/jquery-3.2.0.min.js') }}"></script>
 <script type="text/javascript">
 function getTender(val)
 {
 	console.log(val);
 	window.location="index.php?value="+val;
+}
+
+function login(){
+  data1 = document.getElementById('u_id').value
+  data2 = document.getElementById('password_u').value
+  data = {'username':data1, 'password':data2}
+  $.ajax({
+    url: "/login",
+    data:  JSON.stringify(data),
+    type: "POST",
+    contentType: 'application/json;charset=UTF-8',
+    success: update_success,
+    error: function(error) {
+      console.log(error);
+    }
+  });
+}
+
+function update_success(data){
+  alert(data)
 }
 
 </script>
@@ -36,7 +57,7 @@ function getTender(val)
 
 <div style= "float:right">
   <div id = "right_bar">
-  <form action="/dummy-user.php">
+  <form action="javascript:login()">
     <label for="USER ID">USER ID</label>
     <input type="text" id="u_id"  placeholder="Enter User Id" >
 
