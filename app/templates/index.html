@@ -34,7 +34,7 @@ $(document).ready(function(){
                 success: login,
 				error: function(data)
 				{
-					alert("failed");
+					$("<div class=\"fail\">"+data.responseText+"</div>").insertAfter("#password_u")
 				}
             });
 			return false;

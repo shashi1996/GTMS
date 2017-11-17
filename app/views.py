@@ -38,7 +38,7 @@ def login():
         login_user(user)
         return redirect("/"+username)
     else:
-        return "Incorrect credentials. Please try again."
+        return "Incorrect credentials. Please try again.",401
 
 @app.route("/getUser")
 @login_required
