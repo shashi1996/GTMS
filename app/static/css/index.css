@@ -34,9 +34,8 @@ font-weight:bold;
 }
 
 #subcon1{
-margin: 0px auto;
+margin: 10px auto;
 width:60%;
-height:250px;
 font-size:18px;
 color:black;
 border: 2px solid grey;
@@ -219,4 +218,12 @@ input[type=submit]:hover {
     padding: 20px;
 	width: 170px;
 	margin: 15px;
+}
+#left_bar
+{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+	width: 150px;
+	margin: 27px;	
 }

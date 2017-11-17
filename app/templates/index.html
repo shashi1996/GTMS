@@ -13,25 +13,63 @@ function getTender(val)
 	window.location="index.php?value="+val;
 }
 
-function login(){
-  data1 = document.getElementById('u_id').value
-  data2 = document.getElementById('password_u').value
-  data = {'username':data1, 'password':data2}
-  $.ajax({
-    url: "/login",
-    data:  JSON.stringify(data),
-    type: "POST",
-    contentType: 'application/json;charset=UTF-8',
-    success: update_success,
-    error: function(error) {
-      console.log(error);
-    }
-  });
-}
+$(document).ready(function(){
+		
+		$.ajax({
+			type: 'GET',
+			url: '/getUser',
+			success: login,
+			error: function(){}
+		});
 
-function update_success(data){
-  alert(data)
-}
+	    $("#loginBtn").click(function(){
+			var username = $("#u_id").val();
+			var password = $("#password_u").val();
+			data = {'username':username, 'password':password}
+            $.ajax({
+                type: 'POST',
+                url: '/login',
+				data:  JSON.stringify(data),
+				contentType: 'application/json;charset=UTF-8',
+                success: login,
+				error: function(data)
+				{
+					alert("failed");
+				}
+            });
+			return false;
+		  });
+
+		function login(data){
+			$("#logInDiv").hide();
+                     $("#logOutDiv").show();
+					 $("#left_bar").show();
+					 var con = "Welcome, "+data;
+					 $("#temp").append(con);
+					 $("#left_bar").append("User specific content goes here");
+		}	  
+
+		$("#logoutBtn").click(function(){
+			$.ajax({
+                type: 'GET',
+                url: '/logout',
+                success: function(){
+                	$("#logOutDiv").hide();
+					$("#left_bar").hide();
+					$("#logInDiv").show();
+					$("#temp").empty();
+					$("#left_bar").empty();
+                },
+				error: function(data)
+				{
+					console.log("Logout failed")
+				}
+            });
+			
+			return false;
+		});
+
+	});
 
 </script>
 
@@ -41,7 +79,12 @@ function update_success(data){
 
 <div id="container">
 
-	<img src="{{url_for('static',filename='etender.png')}}" height=70px width=400px>     
+	<img src="{{url_for('static',filename='etender.png')}}" height=70px width=400px> 
+	<div id="logOutDiv" style = "display:none; margin:15px; float:right;">
+		<input type="button" id = "logoutBtn" value="Log Out">  
+		<div id="temp" style = "font-size:18px;">
+		</div>
+    </div>	
 <div class="nav">
   <ul>
     <li class="active"> <a href="index.html">&nbsp&nbsp&nbsp Home &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
@@ -54,31 +97,19 @@ function update_success(data){
 
 </div>
 </br>
-
-<div style= "float:right">
+<div style = "float:left; display:none" id="left_bar">
+</div>
+<div style= "float:right" id="logInDiv">
   <div id = "right_bar">
-  <form action="javascript:login()">
     <label for="USER ID">USER ID</label>
     <input type="text" id="u_id"  placeholder="Enter User Id" >
 
     <label for="Password">Password</label>
-    <input type="text" id="password_u"  placeholder="Enter password">
+    <input type="password" id="password_u"  placeholder="Enter password">
   
-    <input type="submit" value="Submit"></br></br>
-  </form>
+    <input type="submit" id = "loginBtn" value="Log-In"></br></br>
   </div>
 
-  <div id = "right_bar">
-  <form action="/dummy-user.php">
-    <label for="USER ID">Contractor ID</label>
-    <input type="text" id="u_id"  placeholder="Enter Contractor Id" >
-
-    <label for="Password">Password</label>
-    <input type="text" id="password_c"  placeholder="Enter password">
-  
-    <input type="submit" value="Submit"></br></br>
-  </form>
-  </div>
 </div>
 
 <div id="subcon1">

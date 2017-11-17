@@ -39,7 +39,12 @@ def login():
         return redirect("/"+username)
     else:
         return "Incorrect credentials. Please try again."
-   
+
+@app.route("/getUser")
+@login_required
+def getUser():
+    return current_user.username
+
 @app.route("/logout")
 @login_required
 def logout():
@@ -50,7 +55,7 @@ def logout():
 @login_required
 def home(username):
     data = Database.getUser(username)
-    return jsonify(data)
+    return jsonify(data[1])
 
 	
 @app.route("/bids/<pname>")
@@ -89,3 +94,9 @@ def showProject(project):
         return jsonify(data)
     else:
         return "Project not found"
+
+@app.route('/check', methods=['POST'])
+def checkbid():
+    data = {'tender_id':5,'vender_id':6,'date':"c",'cost':10,'project_id':10}
+    Database.addBid(data)
+    return "asda"
