@@ -37,29 +37,11 @@
 		d = document.getElementById('tab')
 		for(var i=0; i<data.length; ++i){
 			tr = document.createElement('tr')
-			
-			td1 = document.createElement('td')
-			td1.appendChild(document.createTextNode(data['title']))
-			tr.appendChild(td1)
-			td2 = document.createElement('td')
-			td2.appendChild(document.createTextNode(data['project_id']))
-			tr.appendChild(td2)
-			td3 = document.createElement('td')
-			td3.appendChild(document.createTextNode(data['state']))
-			tr.appendChild(td3)
-			td4 = document.createElement('td')
-			td4.appendChild(document.createTextNode(data['district']))
-			tr.appendChild(td4)
-			td5 = document.createElement('td')
-			td5.appendChild(document.createTextNode(data['project_category']))
-			tr.appendChild(td5)
-			td6 = document.createElement('td')
-			td6.appendChild(document.createTextNode(data['bid_start_date']))
-			tr.appendChild(td6)
-			td7 = document.createElement('td')
-			td7.appendChild(document.createTextNode(data['bid_end_date']))
-			tr.appendChild(td7)
-			
+			for (var j=0; j<7; ++j){
+				td = document.createElement('td')
+				td.appendChild(document.createTextNode(data[i][j]))
+				tr.appendChild(td)
+			}
 			tab.appendChild(tr)
 		}
 	}
