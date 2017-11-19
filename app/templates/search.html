@@ -4,17 +4,22 @@
 	<link rel="stylesheet" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static',filename='css/w3.css') }}">
 	<script src ="{{ url_for('static',filename='js/jquery-3.2.0.min.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/search.css') }}">
+	<script type="text/JavaScript" src="{{ url_for('static',filename='js/search.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+	
 	<script>
 	function search(){
 		data1 = document.getElementById('method').value
 		data2 = document.getElementById('str').value
-		
+		alert(data1)
+		alert(data2)
 		data = {'method':data1, 'text':data2}
 		$.ajax({
 			url: "/search_by",
 			data:  JSON.stringify(data),
 			type: "POST",
-			contentType: 'application/json;charset=UTF-8',
+			contentType: 'application/json;charset=UTF-8',		
 			success: update_success,
 			error: function(error) {
 				console.log(error);
@@ -26,14 +31,89 @@
 		// need to parse this text as json and accordingly update the search results in this function
 		alert(text)
 	}
-
-	</script>
-</head>
-<body>
-	METHOD
-	<input type="text" name="METHOD" id="method"></input>
-	</br>TEXT<input type="text" name="TEXT" id= "str"></input>
-	</br><input type="button" value="submit" onclick="search()"></input>
 	
+	</script>
+	
+</head>
+<body bgcolor="#c7d0d9">
+
+<div id="container">
+
+<div class="nav">
+  <ul>
+    <li class="active"> <a href="/index">&nbsp&nbsp&nbsp Home &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
+	<li> <a href="/">   &nbsp&nbsp&nbsp Registration &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp| </a></li>
+	<li> <a href="/">&nbsp&nbsp&nbsp Payment Guidelines & Policies &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
+	<li> <a href="/search" target="_blank">&nbsp&nbsp&nbsp Search &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
+	<li> <a href="#">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp FAQ's </a> </li>
+  </ul>
+</div>
+
+
+
+<form class="form-horizontal">
+  <div class="form-group">
+    <label class="control-label col-sm-2" >Search By:</label><br>
+    <label class="radio-inline"><input type="radio" name="optradio" id="method" value="name">Name</label>
+	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="dept">Department</label>
+	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="dist">District</label>
+	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="state">State</label>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-2">TEXT</label>
+    <div class="col-sm-10"> 
+      <input type="text" class="form-control" id="str" placeholder="Enter TEXT">
+    </div>
+  </div>
+  
+  <div class="form-group"> 
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default" onclick="search()">Submit</button>
+    </div>
+  </div>
+</form>
+
+<br><br><br><br><br><br><br><br>  
+<div width="800px" height="800px" id="statehit"></div>
+<div id="tenfo" hidden="yes">
+  <h1 id="tenh1">Tender ID here</h1>
+  <p id="tenp1">Tender description here</p>
+  <p id="start_date">Start Date here </p>
+  <p id="end_date">End Date here </p>
+  <table class="table table-hover">
+                            <thead>
+                               <tr>
+                                  <th>Date</th>
+                                  <th>Stage</th>
+                                  <th>Stage Confirmation by Authority</th>
+                                  <th>Time to complete project</th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td>In days</td>
+                                   
+                              </tr>
+                           </tbody>
+                        </table>
+</div>
+
+
+
+
+<div class="footer" align="margin-bottom">
+<ul>
+  <li> Copyright. All rights reserved. &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
+  <li><a href="tandc.html" target="_blank"> Terms & conditions&nbsp&nbsp&nbsp&nbsp&nbsp| </a></li>
+  <li><a href="e-disclaimer.html" target="_blank"> &nbsp&nbsp&nbsp&nbspDisclaimer </a></li>
+</ul>
+</div>
+
+
+ </div>
 </body>
+
 </html>
