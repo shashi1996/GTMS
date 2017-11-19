@@ -83,6 +83,7 @@ def search_by():
 	method = request.json['method']
 	text = request.json['text']
 	print(method,text)
+	data = Database.search_by({'method':method, 'data':text})
 	'''
 	if(method=="name"):
 		data = Database.search_by_name
@@ -95,7 +96,10 @@ def search_by():
 		
 	return data
 	'''
-	return "SEARCH DATA"
+	print(data)
+	if len(data)==0:
+	    return "No Entries found",401
+	return data
 
 @app.route("/addproject", methods=['POST'])
 @login_required

@@ -10,10 +10,8 @@
 	
 	<script>
 	function search(){
-		data1 = document.getElementById('method').value
+		data1 = $("input[name='optradio']:checked").val()
 		data2 = document.getElementById('str').value
-		alert(data1)
-		alert(data2)
 		data = {'method':data1, 'text':data2}
 		$.ajax({
 			url: "/search_by",
@@ -23,12 +21,14 @@
 			success: update_success,
 			error: function(error) {
 				console.log(error);
+        $("#error").html(error.responseText)
 			}
 		});
 	
 	}
 	function update_success(text){
 		// need to parse this text as json and accordingly update the search results in this function
+    console.log(text)
 		alert(text)
 	}
 	
@@ -51,12 +51,12 @@
 
 
 
-<form class="form-horizontal">
+<form class="form-horizontal" action="javascript:void(0)">
   <div class="form-group">
     <label class="control-label col-sm-2" >Search By:</label><br>
-    <label class="radio-inline"><input type="radio" name="optradio" id="method" value="name">Name</label>
-	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="dept">Department</label>
-	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="dist">District</label>
+    <label class="radio-inline"><input type="radio" name="optradio" id="method" value="title" required>Name</label>
+	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="project_category">Department</label>
+	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="district">District</label>
 	<label class="radio-inline"><input type="radio" name="optradio" id="method" value="state">State</label>
   </div>
   <div class="form-group">
@@ -72,6 +72,7 @@
     </div>
   </div>
 </form>
+<div id="error"></div>
 
 <br><br><br><br><br><br><br><br>  
 <div width="800px" height="800px" id="statehit"></div>

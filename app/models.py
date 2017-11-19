@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from . import login_manager, mysql
+import json
 
 class User(UserMixin):
     def __init__(self, username, access):
@@ -93,4 +94,36 @@ class Database():
         mysql.connection.commit()
         return True
 
-                
+    def search_by(data):
+        cur = mysql.connection.cursor()
+        if data['method']=='project_category':
+            cur.execute("select * from tender_category where tender_category_name='"+data['data']+"'")
+            dept = cur.fetchone()
+            if not dept:
+                return []
+            data['data'] = str(dept[0])
+        cur.execute("select * from project where "+data['method']+"='"+data['data']+"'")
+        data = cur.fetchall()
+        if len(data)>0:
+            data = list(data)
+            for i in range(len(data)):
+                data[i] = list(data[i])
+                data[i][5] = data[i][5].strftime('%Y-%m-%d')
+                data[i][6] = data[i][6].strftime('%Y-%m-%d')
+            return json.dumps(data)
+        else:
+            return []
+    
+'''
+    def search_by_state(data)
+        cur = mysql.connection.cursor()
+        cur.execute("select * from project where state='%s'",data)
+        data = cur.fetchall()
+        return data
+
+    def search_by_district(data)
+        cur = mysql.connection.cursor()
+        cur.execute("Select * from project where district='%s'",data)
+        data = cur.fetchall()
+        return data
+'''             
