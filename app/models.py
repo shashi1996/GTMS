@@ -82,3 +82,15 @@ class Database():
         except Exception as e:
             print(e)
             return False
+
+    def addBid(data):
+        cur = mysql.connection.cursor()
+        cur.execute("insert into bidding(vender_id,tender_id, \
+            project_id,cost,date \
+                ) values('"+data['vender_id']+"','" \
+                    +data['tender_id']+"','"+data['project_id']+"','"+data['cost']+\
+                    "','"+data['date']+"')")
+        mysql.connection.commit()
+        return True
+
+                
