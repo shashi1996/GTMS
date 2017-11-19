@@ -43,6 +43,8 @@ CREATE TABLE IF NOT EXISTS `tender` (
 CREATE TABLE IF NOT EXISTS project (
 	title varchar(200) NOT NULL,
 	project_id int NOT NULL AUTO_INCREMENT,
+	state varchar(100) NOT NULL,
+	district varchar(100) NOT NULL,
 	project_category int NOT NULL,
 	bid_start_date DATE NOT NULL,
 	bid_end_date DATE NOT NULL,
