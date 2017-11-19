@@ -3,7 +3,7 @@ from flask import request
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app
 from app.models import User, Database, load_user
-# from app.models import search_by_name, search_by_......
+
 from . import mysql
 
 
@@ -84,10 +84,14 @@ def search_by():
 	text = request.json['text']
 	print(method,text)
 	'''
-	if(method==" "):
-		data = search_by_
-	elif(method==" "):
-		data = search_by_
+	if(method=="name"):
+		data = Database.search_by_name
+	elif(method=="dept"):
+		data = Database.search_by_dept
+	elif(method=="dist"):
+		data = Database.search_by_dist
+	elif(method=="state"):
+		data = Database.search_by_state
 		
 	return data
 	'''
