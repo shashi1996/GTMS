@@ -21,15 +21,47 @@
 			success: update_success,
 			error: function(error) {
 				console.log(error);
-        $("#error").html(error.responseText)
+				$("#error").html(error.responseText)
 			}
 		});
 	
 	}
 	function update_success(text){
 		// need to parse this text as json and accordingly update the search results in this function
-    console.log(text)
+		console.log(text)
 		alert(text)
+		data = JSON.parse(text)
+		
+		res = document.getElementById('result')
+		res.style.display = "block"
+		d = document.getElementById('tab')
+		for(var i=0; i<data.length; ++i){
+			tr = document.createElement('tr')
+			
+			td1 = document.createElement('td')
+			td1.appendChild(document.createTextNode(data['title']))
+			tr.appendChild(td1)
+			td2 = document.createElement('td')
+			td2.appendChild(document.createTextNode(data['project_id']))
+			tr.appendChild(td2)
+			td3 = document.createElement('td')
+			td3.appendChild(document.createTextNode(data['state']))
+			tr.appendChild(td3)
+			td4 = document.createElement('td')
+			td4.appendChild(document.createTextNode(data['district']))
+			tr.appendChild(td4)
+			td5 = document.createElement('td')
+			td5.appendChild(document.createTextNode(data['project_category']))
+			tr.appendChild(td5)
+			td6 = document.createElement('td')
+			td6.appendChild(document.createTextNode(data['bid_start_date']))
+			tr.appendChild(td6)
+			td7 = document.createElement('td')
+			td7.appendChild(document.createTextNode(data['bid_end_date']))
+			tr.appendChild(td7)
+			
+			tab.appendChild(tr)
+		}
 	}
 	
 	</script>
@@ -72,36 +104,27 @@
     </div>
   </div>
 </form>
-<div id="error"></div>
 
 <br><br><br><br><br><br><br><br>  
 <div width="800px" height="800px" id="statehit"></div>
-<div id="tenfo" hidden="yes">
-  <h1 id="tenh1">Tender ID here</h1>
-  <p id="tenp1">Tender description here</p>
-  <p id="start_date">Start Date here </p>
-  <p id="end_date">End Date here </p>
-  <table class="table table-hover">
-                            <thead>
-                               <tr>
-                                  <th>Date</th>
-                                  <th>Stage</th>
-                                  <th>Stage Confirmation by Authority</th>
-                                  <th>Time to complete project</th>
-                               </tr>
-                            </thead>
-                            <tbody>
-                               <tr>
-                                   <td></td>
-                                   <td></td>
-                                   <td></td>
-                                   <td>In days</td>
-                                   
-                              </tr>
-                           </tbody>
-                        </table>
+<div class="container" id="result" style="display:none">
+    <table class="table table-hover" >
+		<thead>
+		   <tr>
+			  <th>Title</th>
+			  <th>Project id</th>
+			  <th>State</th>
+			  <th>District</th>
+			  <th>Category</th>
+			  <th>Start date</th>
+			  <th>End date</th>
+		   </tr>
+		</thead>
+		<tbody id='tab'>
+		   
+		</tbody>
+	</table>
 </div>
-
 
 
 
