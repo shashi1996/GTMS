@@ -45,7 +45,9 @@
 			tab.appendChild(tr)
 		}
 	}
-	
+	$(document).ready(function(){
+    $("input[name='optradio'][value='{{method}}']").prop('checked',true)
+  })
 	</script>
 	
 </head>
@@ -76,7 +78,7 @@
   <div class="form-group">
     <label class="control-label col-sm-2">TEXT</label>
     <div class="col-sm-10"> 
-      <input type="text" class="form-control" id="str" placeholder="Enter TEXT">
+      <input type="text" class="form-control" id="str" placeholder="Enter TEXT" value="{{data}}">
     </div>
   </div>
   

@@ -10,8 +10,10 @@
 function getTender(val)
 {
 	console.log(val);
-	window.location="index.php?value="+val;
+	data = {'method':'state','text':val}
+	window.location = "search?method=state&text="+val
 }
+
 
 $(document).ready(function(){
 		
