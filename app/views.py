@@ -8,6 +8,7 @@ from . import mysql
 
 
 @app.route('/')
+@app.route('/index')
 def index():
 	return render_template("index.html")
 
@@ -76,7 +77,7 @@ def bidplaced():
 
 @app.route("/search")
 def search():
-	return render_template('search.html')
+	return render_template('search.html',method=request.args.get('method'),data=request.args.get('text'))
 	
 @app.route("/search_by", methods=['POST'])
 def search_by():
