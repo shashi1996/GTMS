@@ -1,181 +1,202 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>pwrmc e-tendering</title>
-    <meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="{{url_for ('static',filename='css/index.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for ('static',filename='css/fullpage.css')}}">
-  <script src ="{{ url_for('static',filename='js/jquery-3.2.0.min.js') }}"></script>
-<script type="text/javascript">
-function getTender(val)
-{
-	console.log(val);
-	data = {'method':'state','text':val}
-	window.location = "search?method=state&text="+val
-}
+{% extends "navbar.html" %}
+{% block include %}
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static',filename='css/rightbar.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/fullpage.css') }}">
 
-
-$(document).ready(function(){
-		
-		$.ajax({
-			type: 'GET',
-			url: '/getUser',
-			success: login,
-			error: function(){}
-		});
-
-	    $("#loginBtn").click(function(){
+	<script type = "text/javascript">
+	function getTender(val)
+	{
+		console.log(val);
+		data = {'method':'state','text':val}
+		window.location = "search?method=state&text="+val
+	}
+	$(document).ready(function(){		
+	     $("#loginBtn").click(function(){
 			var username = $("#u_id").val();
 			var password = $("#password_u").val();
 			data = {'username':username, 'password':password}
-            $.ajax({
-                type: 'POST',
-                url: '/login',
-				data:  JSON.stringify(data),
-				contentType: 'application/json;charset=UTF-8',
-                success: login,
-				error: function(data)
-				{
-					$("<div class=\"fail\">"+data.responseText+"</div>").insertAfter("#password_u")
-				}
-            });
-			return false;
-		  });
-
-		function login(data){
-			$("#logInDiv").hide();
-                     $("#logOutDiv").show();
-					 $("#left_bar").show();
-					 var con = "Welcome, "+data;
-					 $("#temp").append(con);
-					 $("#left_bar").append("User specific content goes here");
-		}	  
-
-		$("#logoutBtn").click(function(){
-			$.ajax({
-                type: 'GET',
-                url: '/logout',
-                success: function(){
-                	$("#logOutDiv").hide();
-					$("#left_bar").hide();
-					$("#logInDiv").show();
-					$("#temp").empty();
-					$("#left_bar").empty();
-                },
-				error: function(data)
-				{
-					console.log("Logout failed")
-				}
-            });
 			
+				console.log("fired");
+				$.ajax({
+					type: 'POST',
+					url: 'login.php',
+					data:  JSON.stringify(data),
+					contentType: 'application/json;charset=UTF-8',
+					success: function(data) {
+						console.log(data);
+				 
+						 $("#login_bar").hide();
+						 $("#logOutBlock").show();
+						 $("#sign_bar").hide();
+						 $("#user_info").show();
+						 var con = "Welcome, "+data;
+						 $("#user_con").append(con);
+					
+					},
+					error: function(data)
+					{
+						$("#wrong_info").show();
+						$("input[type=text], textarea").val("");
+						$("input[type=password], textarea").val("");
+					}
+				});
+				return false;
+		  });
+		  
+		  $("#sign_up").click(function(){
+				// call to sig-up page;
+				console.log("sign up fired");
+		  });
+		  	  	  
+
+		$("#logOutBlock").click(function(){
+			$("#logOutBlock").hide();
+			$("#user_info").hide();
+			$("#login_bar").show();
+			$("#user_info").empty();
+			$("#sign_bar").show();
 			return false;
 		});
 
 	});
 
-</script>
+	</script>
+	
+{% endblock %}
+{% block body %}
 
 
-</head>
-<body bgcolor="#c7d0d9">
+    <!-- Page Content -->
+    <div class="container">
 
-<div id="container">
+      <!-- Portfolio Item Heading -->
+      <h1 class="my-4">Page Heading
+        <small>Secondary Text</small>
+      </h1>
 
-	<img src="{{url_for('static',filename='etender.png')}}" height=70px width=400px> 
-	<div id="logOutDiv" style = "display:none; margin:15px; float:right;">
-		<input type="button" id = "logoutBtn" value="Log Out">  
-		<div id="temp" style = "font-size:18px;">
-		</div>
-    </div>	
-<div class="nav">
-  <ul>
-    <li class="active"> <a href="index.html">&nbsp&nbsp&nbsp Home &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
-	<li> <a href="http://localhost/regform.php">&nbsp&nbsp&nbsp Registration &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp| </a></li>
-	<li> <a href="policy.html">&nbsp&nbsp&nbsp Payment Guidelines & Policies &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
-	<li> <a href="project_login.html" target="_blank">&nbsp&nbsp&nbsp Projects &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp|</a> </li>
-  </ul>
-</div>
+      <!-- Portfolio Item Row -->
+      <div class="row">
 
-
-</div>
-</br>
-<div style = "float:left; display:none" id="left_bar">
-</div>
-<div style= "float:right" id="logInDiv">
-  <div id = "right_bar">
-    <label for="USER ID">USER ID</label>
-    <input type="text" id="u_id"  placeholder="Enter User Id" >
-
-    <label for="Password">Password</label>
-    <input type="password" id="password_u"  placeholder="Enter password">
-  
-    <input type="submit" id = "loginBtn" value="Log-In"></br></br>
-  </div>
-
-</div>
-
-<div id="subcon1">
-<p> <div id="subcon1_head">Government Tender Management System</div><p>
-<p style = "padding: 7px">In a step towards bringing transparency in the tendering process, we bring e-Procurement system for various types of procurements of goods and services in its Departments/Board/Corporations to obtain the most competitive and suitable bids from the bidders.
-Introduction of e-Procurement will enable the Government to introduce ease and efficiency without compromising on the required procedures.E-Procurement will further provide transparency and integrity of content<sub><a href="readmore.html" target="_blank"><u>>> Read More</u></a></sub><p>
-</div>
-
-<div id="subcon2">
-<div id="subcon1_head">View tenders as per the states</div>
-<div id="map" class="IndiaMap">
-<ul class="courts">
-<li style="top:505px; left:350px;"><a href="javascript:getTender('andaman and nicobar')" title="Click here to navigate the data related to Andaman and Nicobar district courts."><span>Andaman and Nicobar</span></a></li>
-<li style="top:425px; left:140px;"><a href="javascript:getTender('andhra pradesh')" title="Click here to navigate the data related to Andhra Pradesh district courts."><span>Andhra Pradesh</span></a></li>
-<li style="top:370px; left:155px;"><a href="javascript:getTender('telangana')" title="Click here to navigate the data related to Telangana district courts."><span>Telangana</span></a></li>
-<li style="top:170px; left:385px;"><a href="javascript:getTender('arunachal pradesh')" title="Click here to navigate the data related to Arunachal Pradesh district courts."><span>Arunachal Pradesh</span></a></li>
-<li style="top:205px; left:385px;"><a href="javascript:getTender('assam')" title="Click here to navigate the data related to Assam district courts."><span>Assam</span></a></li>
-<li style="top:220px; left:280px;"><a href="javascript:getTender('bihar')" title="Click here to navigate the data related to Bihar district courts."><span>Bihar</span></a></li>
-<li style="top:290px; left:215px;"><a href="javascript:getTender('chattisgarh')" title="Click here to navigate the data related to Chhattisgarh district courts."><span>Chhattisgarh</span></a></li>
-<li style="top:330px; left:-40px;"><a href="javascript:getTender('dadra and nagar')" title="Click here to navigate the data related to Dadra and Nagar Haveli district courts."><span>Dadra and Nagar Haveli</span></a></li>
-<li style="top:315px; left:0px;"><a href="javascript:getTender('daman and diu')" title="Click here to navigate the data related to Daman and Diu district courts."><span>Daman and Diu</span></a></li>
-<li style="top:165px; left:145px;"><a href="javascript:getTender('delhi')" title="Click here to navigate the data related to Delhi district courts."><span>Delhi</span></a></li>
-<li style="top:415px; left:70px;"><a href="javascript:getTender('goa')" title="Click here to navigate the data related to Goa district courts."><span>Goa</span></a></li>
-<li style="top:275px; left:35px;"><a href="javascript:getTender('gujrat')" title="Click here to navigate the data related to Gujarat district courts."><span>Gujarat</span></a></li>
-<li style="top:152px; left:110px;"><a href="javascript:getTender('haryana')" title="Click here to navigate the data related to Haryana district courts."><span>Haryana</span></a></li>
-<li style="top:105px; left:135px;"><a href="javascript:getTender('himachal pradesh')" title="Click here to navigate the data related to Himachal Pradesh district courts."><span>Himachal Pradesh</span></a></li>
-<li style="top:60px; left:85px;"><a href="javascript:getTender('jammu and kashmir')" title="Click here to navigate the data related to Jammu and Kashmir district courts."><span>Jammu and Kashmir</span></a></li>
-<li style="top:255px; left:255px;"><a href="javascript:getTender('jharkhand')" title="Click here to navigate the data related to Jharkhand district courts."><span>Jharkhand</span></a></li>
-<li style="top:435px; left:75px;"><a href="javascript:getTender('karnataka')" title="Click here to navigate the data related to Karnataka district courts."><span>Karnataka</span></a></li>
-<li style="top:500px; left:95px;"><a  href="javascript:getTender('kerala')" title="Click here to navigate the data related to Kerala district courts."><span>Kerala</span></a></li>
-<li style="top:520px; left:30px;"><a href="javascript:getTender('lakshadweep')" title="Click here to navigate the data related to Lakshadweep district courts."><span>Lakshadweep</span></a></li>
-<li style="top:265px; left:115px;"><a href="javascript:getTender('madhya pradesh')" title="Click here to navigate the data related to Madhya Pradesh district courts."><span>Madhya Pradesh</span></a></li>
-<li style="top:325px; left:90px;"><a href="javascript:getTender('maharashtra')" title="Click here to navigate the data related to Maharashtra district courts."><span>Maharashtra</span></a></li>
-<li style="top:240px; left:420px;"><a href="javascript:getTender('manipur')" title="Click here to navigate the data related to Manipur district courts."><span>Manipur</span></a></li>
-<li style="top:225px; left:350px;"><a href="javascript:getTender('meghalaya')" title="Click here to navigate the data related to Meghalaya district courts."><span>Meghalaya</span></a></li>
-<li style="top:270px; left:405px;"><a href="javascript:getTender('mizoram')" title="Click here to navigate the data related to Mizoram district courts."><span>Mizoram</span></a></li>
-<li style="top:215px; left:435px;"><a href="javascript:getTender('nagaland')" title="Click here to navigate the data related to Nagaland district courts."><span>Nagaland</span></a></li>
-<li style="top:310px; left:260px;"><a href="javascript:getTender('odisha')" title="Click here to navigate the data related to Odisha district courts."><span>Odisha</span></a></li>
-<li style="top:470px; left:190px;"><a href="javascript:getTender('puducherry')" title="Click here to navigate the data related to Puducherry district courts."><span>Puducherry</span></a></li>
-<li style="top:130px; left:90px;"><a href="javascript:getTender('chandigarh')" title="Click here to navigate the data related to Chandigarh district court."><span>Chandigarh</span></a></li>
-<li style="top:120px; left:90px;"><a href="javascript:getTender('punjab')" title="Click here to navigate the data related to Punjab district courts."><span>Punjab</span></a></li>
-<li style="top:205px; left:55px;"><a href="javascript:getTender('rajasthan')" title="Click here to navigate the data related to Rajasthan district courts."><span>Rajasthan</span></a></li>
-<li style="top:190px; left:315px;"><a href="javascript:getTender('sikkim')" title="Click here to navigate the data related to Sikkim district courts."><span>Sikkim</span></a></li>
-<li style="top:490px; left:145px;"><a href="javascript:getTender('tamil nadu')" title="Click here to navigate the data related to Tamil Nadu district courts."><span>Tamil Nadu</span></a></li>
-<li style="top:255px; left:360px;"><a href="javascript:getTender('tripura')" title="Click here to navigate the data related to Tripura district courts."><span>Tripura</span></a></li>
-<li style="top:200px; left:175px;"><a href="javascript:getTender('uttar pradesh')" title="Click here to navigate the data related to Uttar Pradesh district courts."><span>Uttar Pradesh</span></a></li>
-<li style="top:130px; left:160px;"><a href="javascript:getTender('uttarakhand')" title="Click here to navigate the data related to Uttarakhand district courts."><span>Uttarakhand</span></a></li>
-<li style="top:270px; left:300px;"><a href="javascript:getTender('west bengal')" title="Click here to navigate the data related to West Bengal district courts."><span>West Bengal</span></a></li>
-</ul>
-</div>
-
-</div>
+        <div class="col-md-8">
+          <!--  <img class="img-fluid" src="http://placehold.it/750x500" alt=""> -->
+		  <div id="map" class="IndiaMap">
+			<ul class="courts">
+			<li style="top:505px; left:350px;"><a href="javascript:getTender('andaman and nicobar')" title="Click here to navigate the data related to Andaman and Nicobar district courts."><span>Andaman and Nicobar</span></a></li>
+			<li style="top:425px; left:140px;"><a href="javascript:getTender('andhra pradesh')" title="Click here to navigate the data related to Andhra Pradesh district courts."><span>Andhra Pradesh</span></a></li>
+			<li style="top:370px; left:155px;"><a href="javascript:getTender('telangana')" title="Click here to navigate the data related to Telangana district courts."><span>Telangana</span></a></li>
+			<li style="top:170px; left:385px;"><a href="javascript:getTender('arunachal pradesh')" title="Click here to navigate the data related to Arunachal Pradesh district courts."><span>Arunachal Pradesh</span></a></li>
+			<li style="top:205px; left:385px;"><a href="javascript:getTender('assam')" title="Click here to navigate the data related to Assam district courts."><span>Assam</span></a></li>
+			<li style="top:220px; left:280px;"><a href="javascript:getTender('bihar')" title="Click here to navigate the data related to Bihar district courts."><span>Bihar</span></a></li>
+			<li style="top:290px; left:215px;"><a href="javascript:getTender('chattisgarh')" title="Click here to navigate the data related to Chhattisgarh district courts."><span>Chhattisgarh</span></a></li>
+			<li style="top:330px; left:-40px;"><a href="javascript:getTender('dadra and nagar')" title="Click here to navigate the data related to Dadra and Nagar Haveli district courts."><span>Dadra and Nagar Haveli</span></a></li>
+			<li style="top:315px; left:0px;"><a href="javascript:getTender('daman and diu')" title="Click here to navigate the data related to Daman and Diu district courts."><span>Daman and Diu</span></a></li>
+			<li style="top:165px; left:145px;"><a href="javascript:getTender('delhi')" title="Click here to navigate the data related to Delhi district courts."><span>Delhi</span></a></li>
+			<li style="top:415px; left:70px;"><a href="javascript:getTender('goa')" title="Click here to navigate the data related to Goa district courts."><span>Goa</span></a></li>
+			<li style="top:275px; left:35px;"><a href="javascript:getTender('gujrat')" title="Click here to navigate the data related to Gujarat district courts."><span>Gujarat</span></a></li>
+			<li style="top:152px; left:110px;"><a href="javascript:getTender('haryana')" title="Click here to navigate the data related to Haryana district courts."><span>Haryana</span></a></li>
+			<li style="top:105px; left:135px;"><a href="javascript:getTender('himachal pradesh')" title="Click here to navigate the data related to Himachal Pradesh district courts."><span>Himachal Pradesh</span></a></li>
+			<li style="top:60px; left:85px;"><a href="javascript:getTender('jammu and kashmir')" title="Click here to navigate the data related to Jammu and Kashmir district courts."><span>Jammu and Kashmir</span></a></li>
+			<li style="top:255px; left:255px;"><a href="javascript:getTender('jharkhand')" title="Click here to navigate the data related to Jharkhand district courts."><span>Jharkhand</span></a></li>
+			<li style="top:435px; left:75px;"><a href="javascript:getTender('karnataka')" title="Click here to navigate the data related to Karnataka district courts."><span>Karnataka</span></a></li>
+			<li style="top:500px; left:95px;"><a  href="javascript:getTender('kerala')" title="Click here to navigate the data related to Kerala district courts."><span>Kerala</span></a></li>
+			<li style="top:520px; left:30px;"><a href="javascript:getTender('lakshadweep')" title="Click here to navigate the data related to Lakshadweep district courts."><span>Lakshadweep</span></a></li>
+			<li style="top:265px; left:115px;"><a href="javascript:getTender('madhya pradesh')" title="Click here to navigate the data related to Madhya Pradesh district courts."><span>Madhya Pradesh</span></a></li>
+			<li style="top:325px; left:90px;"><a href="javascript:getTender('maharashtra')" title="Click here to navigate the data related to Maharashtra district courts."><span>Maharashtra</span></a></li>
+			<li style="top:240px; left:420px;"><a href="javascript:getTender('manipur')" title="Click here to navigate the data related to Manipur district courts."><span>Manipur</span></a></li>
+			<li style="top:225px; left:350px;"><a href="javascript:getTender('meghalaya')" title="Click here to navigate the data related to Meghalaya district courts."><span>Meghalaya</span></a></li>
+			<li style="top:270px; left:405px;"><a href="javascript:getTender('mizoram')" title="Click here to navigate the data related to Mizoram district courts."><span>Mizoram</span></a></li>
+			<li style="top:215px; left:435px;"><a href="javascript:getTender('nagaland')" title="Click here to navigate the data related to Nagaland district courts."><span>Nagaland</span></a></li>
+			<li style="top:310px; left:260px;"><a href="javascript:getTender('odisha')" title="Click here to navigate the data related to Odisha district courts."><span>Odisha</span></a></li>
+			<li style="top:470px; left:190px;"><a href="javascript:getTender('puducherry')" title="Click here to navigate the data related to Puducherry district courts."><span>Puducherry</span></a></li>
+			<li style="top:130px; left:90px;"><a href="javascript:getTender('chandigarh')" title="Click here to navigate the data related to Chandigarh district court."><span>Chandigarh</span></a></li>
+			<li style="top:120px; left:90px;"><a href="javascript:getTender('punjab')" title="Click here to navigate the data related to Punjab district courts."><span>Punjab</span></a></li>
+			<li style="top:205px; left:55px;"><a href="javascript:getTender('rajasthan')" title="Click here to navigate the data related to Rajasthan district courts."><span>Rajasthan</span></a></li>
+			<li style="top:190px; left:315px;"><a href="javascript:getTender('sikkim')" title="Click here to navigate the data related to Sikkim district courts."><span>Sikkim</span></a></li>
+			<li style="top:490px; left:145px;"><a href="javascript:getTender('tamil nadu')" title="Click here to navigate the data related to Tamil Nadu district courts."><span>Tamil Nadu</span></a></li>
+			<li style="top:255px; left:360px;"><a href="javascript:getTender('tripura')" title="Click here to navigate the data related to Tripura district courts."><span>Tripura</span></a></li>
+			<li style="top:200px; left:175px;"><a href="javascript:getTender('uttar pradesh')" title="Click here to navigate the data related to Uttar Pradesh district courts."><span>Uttar Pradesh</span></a></li>
+			<li style="top:130px; left:160px;"><a href="javascript:getTender('uttarakhand')" title="Click here to navigate the data related to Uttarakhand district courts."><span>Uttarakhand</span></a></li>
+			<li style="top:270px; left:300px;"><a href="javascript:getTender('west bengal')" title="Click here to navigate the data related to West Bengal district courts."><span>West Bengal</span></a></li>
+			</ul>
+		   </div>
+        </div>
+		
 
 
+        <div class="col-md-4" id = "right_login_bar">
+          <h3 class="my-3">Right Bar</h3>
+			<div id="sign_bar">
+				<p style = "font-size: 15px;"> New Here? Sign-Up </p>
+				<input type = "button" id = "sign_up" value = "Sign_Up">
+			</div>
+			
+		    <div id = "login_bar" class="column">
+			<label for="USER ID">USER ID</label>
+			<input type="text" id="u_id"  placeholder="Enter User Id" >
 
-<div class="footer">
-<ul>
-  <li> Copyright. All rights reserved. &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</li>
-  <li><a href="tandc.html" target="_blank"> Terms & conditions&nbsp&nbsp&nbsp&nbsp&nbsp| </a></li>
-  <li><a href="e-disclaimer.html" target="_blank"> &nbsp&nbsp&nbsp&nbspDisclaimer </a></li>
-</ul>
-</div>
+			<label for="Password">Password</label>
+			<input type="password" id="password_u"  placeholder="Enter password">
+		  
+			<input type="button" id = "loginBtn" value="Log-In"></br></br>
+			<p id = "wrong_info" style = "display:none; color: red;"> Credentials are Incorrect, Please Try again</p>
+		  </div>
+		  
+		  <div id = "user_info" style = "display:none;">
+		  <h3 class = "my-3" >Information</h3>
+		  <p id = "user_con" style = "font-size: 15px;"></p>
+		  </div>
+        </div>
 
+      </div>
+      <!-- /.row -->
 
-</div>   
-</body>
-</html>
+      <!-- Related Projects Row -->
+      <h3 class="my-4">Related Projects</h3>
+
+      <div class="row">
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 col-sm-6 mb-4">
+          <a href="#">
+            <img class="img-fluid" src="http://placehold.it/500x300" alt="">
+          </a>
+        </div>
+
+      </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+	
+	
+	
+
+    <!-- Footer -->
+    <footer class="py-2 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+
+{% endblock %}

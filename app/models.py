@@ -49,11 +49,11 @@ class Database():
             if data['type'] == 'admin':
                 cur.execute("insert into admin(username,password) values('"+data['username']+"','"+data['password']+"')")
             else:
-                cur.execute("insert into vender(firm,firm_name, \
-                    firm_url,username,password,user_fname,user_add,mobile_no, \
-                    pan_no,tan_no,vat_no) values('"+data['firm']+"','" \
-                    +data['firm_name']+"','"+data['firm_url']+"','"+data['username']+\
-                    "','"+data['password']+"','"+data['user_fname']+"','"+data['user_add']+\
+                cur.execute("insert into vender(firm, \
+                    firm_url,username,password,user_fname,mobile_no, \
+                    pan_no,tan_no,vat_no) values('"+data['firm']+"','"+data['firm_url']+\
+                    "','"+data['username']+\
+                    "','"+data['password']+"','"+data['user_fname']+\
                     "','"+data['mobile_no']+"','"+data['pan_no']+"','"+data['tan_no']+\
                     "','"+data['vat_no']+"')")
         except Exception as e:
@@ -65,8 +65,8 @@ class Database():
     def addProject(data):
         cur = mysql.connection.cursor()
         try:
-            cur.execute("insert into project(title, project_category, bid_start_date,\
-                bid_end_date) values('"+data['title']+"','"+data['project_category']+\
+            cur.execute("insert into project(title, state, district, project_category, bid_start_date,\
+                bid_end_date) values('"+data['title']+"','"+data['state']+"','"+data['district']+"','"+data['project_category']+\
                 "','"+data['bid_start_date']+"','"+data['bid_end_date']+"')")
             mysql.connection.commit()
         except Exception as e:
