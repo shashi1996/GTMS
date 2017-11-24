@@ -2,12 +2,10 @@
 CREATE TABLE IF NOT EXISTS `vender` (
   `vender_id` int NOT NULL AUTO_INCREMENT,
   `firm` varchar(200) NOT NULL,
-  `firm_name` varchar(100) NOT NULL,
   `firm_url` varchar(100) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `user_fname` varchar(100) NOT NULL,
-  `user_add` varchar(200) NOT NULL,
   `mobile_no` varchar(12) NOT NULL,
   `pan_no` varchar(100) NOT NULL,
   `tan_no` varchar(100) NOT NULL,

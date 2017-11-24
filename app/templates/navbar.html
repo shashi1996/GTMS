@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pwrmc e-tendering</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" href= "{{ url_for('static',filename='css/bootstrap.min.css') }}">
+	<script src ="{{ url_for('static',filename='js/jquery.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='js/bootstrap.min.js')}}"></script>
+	<style type="text/css">
+		.start{
+			margin-top: 75px;
+		}
+		footer{
+			position: fixed;
+			bottom: 0px;
+			width: 100%;
+			height: 40px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+	</style>
+	{% block include %}{% endblock %}
+</head>
+<body bgcolor="#c7d0d9">
+	
+
+		<!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top row">
+      <div class="container">
+        <a class="navbar-brand" href="#">Government Tender Management System</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+			 <li class="nav-item" id = "logOutBlock" style = "display:none;">
+				<a class="nav-link" href="#">Log Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+   
+{% block body %}{% endblock %}
+<!-- Footer -->
+    <footer class=" bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy;GTMS</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+</body>
+</html>

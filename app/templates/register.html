@@ -1,0 +1,180 @@
+{% extends "navbar.html" %}
+{% block include %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+ </script>
+ <script>
+ function hello(){
+  console.log("hello")
+ }
+ function submitData(){
+   data = {'firm':$('#Company').val(),
+            'type':"contractor",
+            'firm_url':$('#url').val(),
+            'username':$('#UserName').val(),
+            'password':$('#password').val(),
+            'user_fname':$('#FullName').val(),
+            'mobile_no':$('#MobileNumber').val(),
+            'pan_no':$('#PanNumber').val(),
+            'tan_no':$('#TanNumber').val(),
+            'vat_no':$('#VatNumber').val(),
+          };
+    $.ajax({
+      type: 'POST',
+      url: '/signup',
+      contentType: 'application/json;charset=UTF-8',
+      data: JSON.stringify(data),
+      success:function(){
+        $("#status").html("User added Successfully.")
+      },
+      error:function(){
+        $("#status").innerHTML = "Error in adding user."
+      }
+
+    });
+ }
+ $(document).ready(function()
+ {
+	$("form").submit(function()
+	{	
+		if ($('#Password').val() == $('#ConfirmPassword').val()) 
+		{
+			$( '#Perror' ).html("Passwords doesnt match");
+			return false;
+		}
+		else
+		{
+			
+			$( '#error' ).html("");
+			//alert("Form Submitted Successfully");
+		}
+   
+
+	});
+ });
+
+</script>
+{% endblock %}
+{% block body %}
+<form class="form-horizontal" action="javascript:submit()">
+<fieldset>
+
+<!-- Form Name -->
+<legend></legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Company">Company</label>  
+  <div class="col-md-5">
+  <input id="Company" name="Company" type="text" placeholder="Company name" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="url">URL</label>  
+  <div class="col-md-5">
+  <input id="url" name="url" type="url" placeholder="URL." class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="UserName">User Name</label>  
+  <div class="col-md-5">
+  <input id="UserName" name="UserName" type="text" placeholder="User Name" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="password">Password</label>
+  <div class="col-md-5">
+    <input id="password" name="password" type="password" placeholder="Password" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="ConfirmPassword">Confirm Password</label>
+  <div class="col-md-5">
+    <input id="ConfirmPassword" name="ConfirmPassword" type="password" placeholder="Confirm Password" class="form-control input-md" required="">
+    
+  </div><br><br>
+  <p class="col-md-8 control-label" id="error" style="color:red"></p>
+</div>
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="FullName">Full Name</label>  
+  <div class="col-md-5">
+  <input id="FullName" name="FullName" type="text" placeholder="Full Name" class="form-control input-md" required="">
+    
+  </div><br><br>
+  <p class="col-md-8 control-label" id="error" style="color:red"></p>
+
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="MobileNumber">Mobile Number</label>  
+  <div class="col-md-5">
+  <input id="MobileNumber" name="MobileNumber" type="text" placeholder="+91 7513200000" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="PanNumber">Pan Number</label>  
+  <div class="col-md-5">
+  <input id="PanNumber" name="PanNumber" type="text" placeholder="AAAPL1234C" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="TanNumber">Tan Number</label>  
+  <div class="col-md-5">
+  <input id="TanNumber" name="TanNumber" type="text" placeholder="AAAA99999A" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="CentralizedCertificateNumber">Centralized Certificate Number</label>  
+  <div class="col-md-5">
+  <input id="VatNumber" name="CentralizedCertificateNumber" type="text" placeholder="36012/22/93" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="submit"></label>
+  <div class="col-md-4">
+    <input id="submit" name="submit" type="submit" class="btn btn-success" onclick="submitData()"></div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="submit"></label>
+  <div class="col-md-4" id="status">
+    
+  </div>
+</div>
+
+</fieldset>
+</form>
+{% endblock %}

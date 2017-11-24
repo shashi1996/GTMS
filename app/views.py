@@ -6,7 +6,6 @@ from app.models import User, Database, load_user
 
 from . import mysql
 
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -19,14 +18,15 @@ def about():
 @app.route('/signup',methods=['GET','POST'])
 def signup():
 	if request.method == 'GET':
-		return "signup form"
+		return render_template("register.html")
 	else:
 		#verify details
 		data = request.get_json()
+		print(data)
 		if Database.addUser(data):
 			return "User added successfully"
 		else:
-			return "Error"
+			return "Error",401
 
 @app.route('/login', methods=['POST'])
 def login():
