@@ -128,3 +128,7 @@ def checkbid():
 	data = {'tender_id':5,'vender_id':6,'date':"c",'cost':10,'project_id':10}
 	Database.addBid(data)
 	return "asda"
+
+@app.route('/admin', methods=['GET'])
+def admin():
+	return render_template('admin.html',method=request.args.get('method'),data=request.args.get('text'))
