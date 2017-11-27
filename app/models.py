@@ -113,6 +113,11 @@ class Database():
             return json.dumps(data)
         else:
             return []
+    def getContractor(uname):
+        cur = mysql.connection.cursor()
+        cur.execute("select * from vender where username = '"+uname+"'")
+        data = cur.fetchone()
+        return data
     
 '''
     def search_by_state(data)

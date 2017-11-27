@@ -135,3 +135,12 @@ def admin():
     if not (current_user.access == "admin"):
         return "Access Denied",401
     return render_template('admin.html',method=request.args.get('method'),data=request.args.get('text'))
+
+@app.route('/contractor/<uname>', methods=['GET'])
+@login_required
+def contractor(uname):
+    if curent_user.access == "admin" or  curent_user.username == uname:
+        data = Database.getContractor(uname)
+        if len(data)==0:
+            return "User not found",404
+        return jsonify(data)

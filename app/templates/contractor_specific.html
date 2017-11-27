@@ -1,0 +1,202 @@
+<script  type = "text/javascript">
+	
+	function fireProject()
+	{
+		// app call to server side;
+		console.log("fire Project");
+	}
+	$(document).ready(function(){
+		 $.ajax({
+				url: "con_details.php",
+				type: "GET",
+				data: '',
+				success: function(data) {
+				
+					 info = JSON.parse(data);
+					 //console.log(info);
+					 console.log(info.Name);
+					 $('#name_c').html(info.Name);
+					 $('#mobile_c').html(info.Mobile);
+					 $('#pan_c').html(info.PAN);
+					 $('#tan_c').html(info.TANN);
+					 $('#vat_c').html(info.VAT);
+					 
+				},
+				error: function(data) {
+					console.log(data);
+					console.log("something went wrong");
+				} 			
+	    });
+		
+		$.ajax({
+				url: "contractor_project.php",
+				type: "GET",
+				data: '',
+				success: function(data) {
+					//console.log("works");
+					info = JSON.parse(data);
+					//console.log(info);
+					
+					$.each(info, function (i, elem) {
+						con = "";
+						con += "<tr id ="+elem.Tno+" onclick = 'fireProject()' style = 'cursor: pointer;'>"+"<td>"+elem.Tno+"</td>"+"<td>"+elem.date+"</td>"+"<td>"+elem.tender+"</td>"+"<td>"+elem.org+"</td>"+"</tr>";
+						$('#avail_tend').append(con);
+						//console.log(elem.date);
+						//console.log(elem.tender);
+						//console.log(elem.org);
+					});
+					 
+				},
+				error: function(data) {
+					console.log(data);
+					console.log("something went wrong");
+				} 			
+	    });
+		
+		
+		$.ajax({
+				url: "project_bid.php",
+				type: "GET",
+				data: '',
+				success: function(data) {
+					str = "Change Status";
+					
+					$.each(info, function (i, elem) {
+						con = "";
+						con += "<tr id ="+elem.Tno+" onclick = 'fireProject()' style = 'cursor: pointer;'>"+"<td>"
+						+elem.Tno+"</td>"+"<td>"+elem.date+"</td>"+"<td>"+elem.tender+"</td>"+"<td>"
+						+elem.org+"</td>"+"<td>"+"<a href ='#'>"+str+"</a>"+"</td>"+"</tr>";
+						$('#proj_bid').append(con);
+					});
+					 
+				},
+				error: function(data) {
+					console.log(data);
+					console.log("something went wrong");
+				} 			
+	    });
+	});
+	
+	
+	</script>
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+      <!-- Portfolio Item Heading -->
+      <h1 class="my-4">Glad to see you </h1>
+
+      <!-- Portfolio Item Row -->
+      <div class="row">
+
+        <div class="col-md-8">
+          <div id="con_details">
+			<table class="table" id="det">
+			<thead>
+			  <tr>
+				<th>Name</th>
+				<th>Mobile No:</th>
+				<th>PAN</th>
+				<th>TAN</th>
+				<th>VAT</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<td id = "name_c"></td>
+				<td id = "mobile_c"></td>
+				<td id = "pan_c"></td>
+				<td id = "tan_c"></td>
+				<td id = "vat_c"></td>
+			  </tr>
+			</tbody>
+		  </table>
+		  </div>
+		  <div id = "project_bid">
+		  <table class="table" id="proj_bid" >
+			<thead>
+			  <tr>
+				<th>Tender No.</th>
+				<th style ="width:20%;">Date</th>
+				<th>Tender</th>
+				<th>Organization</th>
+				<th>Status</th>
+			  </tr>
+			</thead>
+			<tbody >
+			</tbody>
+		  </table>
+		  </div>
+		  
+		  </br>
+		  <div id = "current_proj">
+		  <table class="table" id="avail_tend" >
+			<thead>
+			  <tr>
+				<th>Tender No.</th>
+				<th style ="width:20%;">Date</th>
+				<th>Tender</th>
+				<th>Organization</th>
+			  </tr>
+			</thead>
+			<tbody >
+			</tbody>
+		  </table>
+		  </div>
+
+
+      </div>
+      <!-- /.row -->
+
+ 
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+	
+	
+
+    <!-- Footer -->
+    <footer class="py-2 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+
+  </body>
+
+</html>
