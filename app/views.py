@@ -37,7 +37,7 @@ def login():
 	if Database.login(username, password):
 		user = load_user(username)
 		login_user(user)
-		return redirect("/"+username)
+		return redirect("/user/"+username)
 	else:
 		return "Incorrect credentials. Please try again.",401
 
@@ -52,7 +52,7 @@ def logout():
 	logout_user()
 	return redirect("/")
 
-@app.route("/<username>")
+@app.route("/user/<username>")
 @login_required
 def home(username):
 	data = Database.getUser(username)
@@ -130,5 +130,8 @@ def checkbid():
 	return "asda"
 
 @app.route('/admin', methods=['GET'])
+@login_required
 def admin():
-	return render_template('admin.html',method=request.args.get('method'),data=request.args.get('text'))
+    if not (current_user.access == "admin"):
+        return "Access Denied",401
+    return render_template('admin.html',method=request.args.get('method'),data=request.args.get('text'))

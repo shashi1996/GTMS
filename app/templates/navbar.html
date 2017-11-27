@@ -24,6 +24,63 @@
 			padding-bottom: 5px;
 		}
 	</style>
+  <script type="text/javascript">
+    function loggedIn(data){
+      
+      $("#login_bar").hide();
+      $("#logOutBlock").show();
+      $("#sign_bar").hide();
+      $("#user_info").show();
+      var con = "Welcome, "+data;
+      $("#user_con").html(con);
+  }
+
+  function loggedOut(data){
+    $("input[type=text], textarea").val("");
+    $("input[type=password], textarea").val("");
+    $("#logOutBlock").hide();
+      $("#user_info").hide();
+      $("#login_bar").show();
+      $("#user_con").empty();
+      $("#sign_bar").show();
+  }
+
+  $(document).ready(function(){
+    $.ajax({
+      type: 'GET',
+      url: '/getUser',
+      success: loggedIn,
+      error: loggedOut
+    });
+    $("#loginBtn").click(function(){
+      var username = $("#u_id").val();
+      var password = $("#password_u").val();
+      data = {'username':username, 'password':password}
+      
+        console.log("fired");
+        $.ajax({
+          type: 'POST',
+          url: '/login',
+          data:  JSON.stringify(data),
+          contentType: 'application/json;charset=UTF-8',
+          success: loggedIn,
+          error: loggedOut
+        });
+        return false;
+      });
+      
+      $("#sign_up").click(function(){
+        // call to sig-up page;
+        window.location = "signup"
+      });
+              
+
+    $("#logOutBlock").click(function(){
+      window.location = "/logout"
+      return false;
+    });
+  })
+  </script>
 	{% block include %}{% endblock %}
 </head>
 <body bgcolor="#c7d0d9">
