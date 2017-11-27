@@ -11,55 +11,8 @@
 		data = {'method':'state','text':val}
 		window.location = "search?method=state&text="+val
 	}
-	$(document).ready(function(){		
-	     $("#loginBtn").click(function(){
-			var username = $("#u_id").val();
-			var password = $("#password_u").val();
-			data = {'username':username, 'password':password}
-			
-				console.log("fired");
-				$.ajax({
-					type: 'POST',
-					url: 'login.php',
-					data:  JSON.stringify(data),
-					contentType: 'application/json;charset=UTF-8',
-					success: function(data) {
-						console.log(data);
-				 
-						 $("#login_bar").hide();
-						 $("#logOutBlock").show();
-						 $("#sign_bar").hide();
-						 $("#user_info").show();
-						 var con = "Welcome, "+data;
-						 $("#user_con").append(con);
-					
-					},
-					error: function(data)
-					{
-						$("#wrong_info").show();
-						$("input[type=text], textarea").val("");
-						$("input[type=password], textarea").val("");
-					}
-				});
-				return false;
-		  });
-		  
-		  $("#sign_up").click(function(){
-				// call to sig-up page;
-				console.log("sign up fired");
-		  });
-		  	  	  
-
-		$("#logOutBlock").click(function(){
-			$("#logOutBlock").hide();
-			$("#user_info").hide();
-			$("#login_bar").show();
-			$("#user_info").empty();
-			$("#sign_bar").show();
-			return false;
-		});
-
-	});
+	
+	
 
 	</script>
 	
