@@ -151,8 +151,9 @@ def load_proj_data():
 @app.route('/contractor/<uname>', methods=['GET'])
 @login_required
 def contractor(uname):
-    if curent_user.access == "admin" or  curent_user.username == uname:
+    if current_user.access == "admin" or  current_user.username == uname:
         data = Database.getContractor(uname)
         if len(data)==0:
             return "User not found",404
-        return jsonify(data)
+        return render_template("contractor.html")
+    return "Invalid access",401

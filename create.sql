@@ -53,17 +53,15 @@ CREATE TABLE IF NOT EXISTS `bidding`(
    `vender_id` int NOT NULL,
    `tender_id` int NOT NULL,
    `project_id` int NOT NULL,
-   `cost` int NOT NULL,
-   `date` DATE NOT NULL,
    PRIMARY KEY(`bid_id`)
 );
 
 /*Tender categories are stored in this table*/
  
-CREATE TABLE IF NOT EXISTS `tender_category`(
-	`tender_category_id` int NOT NULL,
-	`tender_category_name` varchar(200) NOT NULL,
-	PRIMARY KEY(`tender_category_id`)
+CREATE TABLE IF NOT EXISTS `project_category`(
+	`project_category_id` int NOT NULL,
+	`project_category_name` varchar(200) NOT NULL,
+	PRIMARY KEY(`project_category_id`)
 );
 
 /*Display only conatact details*/
@@ -92,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `news`(
 );
 
 ALTER TABLE `project`
-   ADD FOREIGN KEY (`project_category`) REFERENCES `tender_category` (`tender_category_id`);
+   ADD FOREIGN KEY (`project_category`) REFERENCES `project_category` (`project_category_id`);
 
 ALTER TABLE `bidding`
       ADD FOREIGN KEY (`vender_id`) REFERENCES `vender` (`vender_id`);

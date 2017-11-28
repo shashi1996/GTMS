@@ -35,16 +35,14 @@ class Database():
     def getUser(username):
         cur = mysql.connection.cursor()
         cur.execute("Select * from admin where username ='"+ username+"'")
-        try:
-            data = cur.fetchone()
+        data = cur.fetchone()
+        if cur.rowcount != 0:
             return data
-        except ProgrammingError:
-            cur.execute("Select * from vender where username ='"+username+"'")
-            try:
-                data = cur.fetchone()
-                return data
-            except ProgrammingError:
-                return "No data found"
+        cur.execute("Select * from vender where username ='"+username+"'")
+        data = cur.fetchone()
+        if cur.rowcount != 0:
+            return data
+        return "No data found"
 
     def addUser(data):
         cur = mysql.connection.cursor()
