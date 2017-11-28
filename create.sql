@@ -29,12 +29,7 @@ CREATE TABLE IF NOT EXISTS `tender` (
     `est_amt` int(10) NOT NULL,
     `tender_pub_date` DATE NOT NULL,
     `tender_last_date` DATE NOT NULL,
-    `emd_amount` int NOT NULL,
-    `emd_payable` varchar(200) NOT NULL,
-    `tender_time` int NOT NULL,
-    `tender_active` ENUM('y','n') NOT NULL,
-    `tender_desc` varchar(200) NOT NULL,
-    `tender_file` varchar(200) NOT NULL,
+    `tender_active` ENUM('a','r','w') NOT NULL,
     PRIMARY KEY (`tender_id`)
 );
 
@@ -46,6 +41,8 @@ CREATE TABLE IF NOT EXISTS project (
 	project_category int NOT NULL,
 	bid_start_date DATE NOT NULL,
 	bid_end_date DATE NOT NULL,
+	project_desc varchar(1500) NOT NULL,
+	project_status ENUM('a','w') NOT NULL,
 	PRIMARY KEY(project_id)
 );
 
