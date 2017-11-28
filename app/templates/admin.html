@@ -1,117 +1,116 @@
 {% extends "navbar.html" %}
 {% block include %}
 	<link rel="stylesheet" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-
+	<script src="{{ url_for ('static', filename='js/admin.js') }}"></script>
+	<script src="{{ url_for ('static', filename='js/jquery.min.js') }}"></script>
 {% endblock %}
 
 {% block body %}
     <!-- Page Content -->
     <div class="container">
       <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home">Approve</a></li>
-    <li><a data-toggle="tab" href="#menu1">Add New Tender</a></li>
+    <li class="active"><a data-toggle="tab" href="#home" onclick='allocated()'>Allocated Projects</a></li>
+    <li><a data-toggle="tab" href="#menu1" onclick='waiting()'>Waiting Projects</a></li>
     <li><a data-toggle="tab" href="#menu2">View All</a></li>
-    <li><a data-toggle="tab" href="#menu3">Status Approve</a></li>
+    <li><a data-toggle="tab" href="#menu3">Add New Project</a></li>
     <li><a data-toggle="tab" href="#menu4">Bidding Status</a></li>
       </ul>
 
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
-      <h3>Approval</h3>
+      <h3>Allocated Projects</h3>
        <table class="table table-hover" >
-    <thead>
-       <tr>
-        <th>Sl no</th>
-        <th>Contractor/Vendor Name</th>
-        <th>State</th>
-        <th>District</th>
-        <th>Class Certification Number</th>
-        <th>Approve</th>
-        
-       </tr>
-    </thead>
-    <tbody id='tab'>
-       
-    </tbody>
-  </table>
-    </div>
-    <div id="menu1" class="tab-pane fade">
-      <h3>Add New Tender</h3>
-      <div class="row">
-         <div class="col-md-4">
-            <div class="form-group">
-            <label for="tid">Tender ID:</label>
-            <input type="text" class="form-control" id="tid" readonly>
-           </div>
-          </div>
-      </div>
-
-    <div class="form-group">
-        <label for="file">Tender File:</label>
-        <input type="text" class="form-control" id="tender_file">
-      </div>
-
-      <div class="form-group">
-        <input type="button" class="btn btn-default" value="Submit">
-      </div>
-    </div>
-    <div id="menu2" class="tab-pane fade">
-      <h3>View Tenders</h3>
-      <div class="container">
-
-      <!-- Portfolio Item Heading -->
-      <h1 class="my-4">Search for the project/Tenders
-        
-      </h1>
-
-      <!-- Portfolio Item Row -->
-      <div class="row">
-
-        <div class="col-md-8">
-         <form class="form-horizontal" action="javascript:void(0)">
-  <div class="form-group">
-    
-    <div class="row">
-    <label class="radio-inline"><input type="radio" name="optradio" id="method" value="title" required>Name</label>
-    <label class="radio-inline"><input type="radio" name="optradio" id="method" value="project_category">Department</label>
-    <label class="radio-inline"><input type="radio" name="optradio" id="method" value="district">District</label>
-    <label class="radio-inline"><input type="radio" name="optradio" id="method" value="state">State</label>
-  </div></div>
-  <div class="form-group">
-    <label class="control-label col-sm-2">Search here..</label>
-    <div class="col-sm-10"> 
-      <input type="text" class="form-control" id="str" placeholder="Enter TEXT" value="{{data}}">
-    </div>
-  </div>
-  
-  <div class="form-group"> 
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-default" onclick="search()">Transmit</button>
-    </div>
-  </div>
-</form>
-        </div>
-
-        <br><br><br><br><br><br><br><br>  
-<div width="800px" height="800px" id="statehit"></div>
-<div class="container" id="result" style="display:none">
-    <table class="table table-hover" >
-    <thead>
+		<thead>
        <tr>
         <th>Title</th>
-        <th>Project id</th>
+        <th>Project ID</th>
         <th>State</th>
         <th>District</th>
         <th>Category</th>
-        <th>Start date</th>
-        <th>End date</th>
+        <th>Bid Start Date</th>
+		<th>Bid End Date</th>
+        
        </tr>
-    </thead>
-    <tbody id='tab'>
-       
-    </tbody>
-  </table>
-</div>
+		</thead>
+		<tbody id='allo_table'>
+			
+		</tbody>
+		</table>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Waiting Projects</h3>
+      <table class="table table-hover" >
+		<thead>
+       <tr>
+        <th>Title</th>
+        <th>Project ID</th>
+        <th>State</th>
+        <th>District</th>
+        <th>Category</th>
+        <th>Start Date</th>
+		<th>End Date</th>
+        
+       </tr>
+		</thead>
+		<tbody id='wait_table'>
+		   
+		</tbody>
+		</table>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>View Projects</h3>
+      <div class="container">
+	  
+      <!-- Portfolio Item Heading -->
+      <h1 class="my-4">Search for the projects </h1>
+
+      <!-- Portfolio Item Row -->
+      <div class="row">
+        <div class="col-md-8">
+         <form class="form-horizontal" action="javascript:void(0)">
+		  <div class="form-group">
+			
+			<div class="row">
+			<label class="radio-inline"><input type="radio" name="optradio" id="method" value="title" required>Name</label>
+			<label class="radio-inline"><input type="radio" name="optradio" id="method" value="project_category">Department</label>
+			<label class="radio-inline"><input type="radio" name="optradio" id="method" value="district">District</label>
+			<label class="radio-inline"><input type="radio" name="optradio" id="method" value="state">State</label>
+		  </div></div>
+		  <div class="form-group">
+			<label class="control-label col-sm-2">Search here..</label>
+			<div class="col-sm-10"> 
+			  <input type="text" class="form-control" id="str" placeholder="Enter TEXT" value="{{data}}">
+			</div>
+		  </div>
+		  
+		  <div class="form-group"> 
+			<div class="col-sm-offset-2 col-sm-10">
+			  <button type="submit" class="btn btn-default" onclick="search()">Transmit</button>
+			</div>
+		  </div>
+		</form>
+				</div>
+
+				<br><br>
+		<div width="800px" height="800px" id="statehit"></div>
+		<div class="container" id="result" style="display:none">
+			<table class="table table-hover" >
+			<thead>
+			   <tr>
+				<th>Title</th>
+				<th>Project id</th>
+				<th>State</th>
+				<th>District</th>
+				<th>Category</th>
+				<th>Start date</th>
+				<th>End date</th>
+			   </tr>
+			</thead>
+			<tbody id='tab'>
+			   
+			</tbody>
+		  </table>
+		</div>
       </div>
       <!-- /.row -->
 
@@ -121,15 +120,41 @@
     </div>
     
     <div id="menu3" class="tab-pane fade">
-      <h3>Status Approve</h3>
+      <h3>Add New Project</h3>
       <div class="container">
-        <label>Tender ID</label><p id="ten_id"></p>
-        <label>Contractor Name</label><p id="con_name"></p>
-        <label>Tender Description</label><p id="ten_des"></p>
-        <label>Tender Status</label><p id="ten_id"></p>
-
-
+        <form>
+		  <div class="form-group">
+			<label >Title</label>
+			<input type="text" class="form-control" id="tit">
+		  </div>
+		  <div class="form-group">
+			<label >State</label>
+			<input type="text" class="form-control" id="state">
+		  </div>
+		  <div class="form-group">
+			<label >District</label>
+			<input type="text" class="form-control" id="dist">
+		  </div>
+		  <div class="form-group">
+			<label >Category</label>
+			<input type="text" class="form-control" id="cate">
+		  </div>
+		  <div class="form-group">
+			<label >Start Date</label>
+			<input type="text" class="form-control" id="strt">
+		  </div>
+		  <div class="form-group">
+			<label >End Date</label>
+			<input type="text" class="form-control" id="end">
+		  </div>
+		  <div class="form-group">
+			<label for="comment">Description:</label>
+			<textarea class="form-control" rows="5" id="desc"></textarea>
+		  </div>
+		  <button type="button" class="btn btn-default" onclick="add_project()">Submit</button>
+		</form>
       </div>
+	  <br><br><br>
     </div>
      <div id="menu4" class="tab-pane fade">
       <h3>View Bidding </h3>
