@@ -17,7 +17,10 @@ def load_user(username):
     cur = mysql.connection.cursor()
     cur.execute("Select username,vender from login where username='"+username+"'")
     data = cur.fetchone()
-    return User(data[0],data[1])
+    try:
+        return User(data[0],data[1])
+    except:
+        return []
 
 class Database():
     def login(username,password):
