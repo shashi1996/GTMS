@@ -34,6 +34,7 @@ function load_waiting_proj(data){
 	loadProjectData(data, document.getElementById('wait_table'))
 }
 function loadProjectData(t, tab){
+	alert(data)
 	data = JSON.parse(t)
 	for(i=0; i<data.length; ++i){
 		a = document.createElement('a')
@@ -80,7 +81,7 @@ function update_success(text){
 			td.appendChild(document.createTextNode(data[i][j]))
 			tr.appendChild(td)
 		}
-		tab.appendChild(tr)
+		d.appendChild(tr)
 	}
 }
 
