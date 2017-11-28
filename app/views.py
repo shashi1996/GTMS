@@ -85,18 +85,6 @@ def search_by():
 	text = request.json['text']
 	print(method,text)
 	data = Database.search_by({'method':method, 'data':text})
-	'''
-	if(method=="name"):
-		data = Database.search_by_name
-	elif(method=="dept"):
-		data = Database.search_by_dept
-	elif(method=="dist"):
-		data = Database.search_by_dist
-	elif(method=="state"):
-		data = Database.search_by_state
-		
-	return data
-	'''
 	print(data)
 	if len(data)==0:
 	    return "No Entries found",401
@@ -135,6 +123,22 @@ def admin():
     if not (current_user.access == "admin"):
         return "Access Denied",401
     return render_template('admin.html',method=request.args.get('method'),data=request.args.get('text'))
+
+@app.route('/load_proj_data', methods=['POST'])
+def load_proj_data():
+	status = request.json['status']
+	if(status=="allocated"):
+		pass
+	else:
+		pass
+	return ""
+
+@app.route('/add_project', methods=['POST'])
+def add_project():
+	#Add the project here to the Database
+	
+	
+	return "SUCCESS"
 
 @app.route('/contractor/<uname>', methods=['GET'])
 @login_required
