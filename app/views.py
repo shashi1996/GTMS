@@ -103,7 +103,7 @@ def addProject():
 			return "Error saving data"
 	return "Access denied" 
 
-@app.route("/project/<project>", methods=['GET'])
+@app.route("/project/id/<project>", methods=['GET'])
 def showProject(project):
 	data = Database.getProject(project)
 	if data is not False:
@@ -111,6 +111,20 @@ def showProject(project):
 	else:
 		return "Project not found"
 
+@app.route('/project/title/<pname>', methods=['GET'])
+def disp_project(pname):
+	#get project by project name
+	'''
+	if curent_user.access == "admin":
+		#if allocated send updates and specify type
+		#else send tenders and specify type
+		pass
+	else:
+		#dont send data but send 'contractor' as type
+		pass
+	'''
+	return render_template('proj_info.html')
+	
 @app.route('/check', methods=['POST'])
 def checkbid():
 	data = {'tender_id':5,'vender_id':6,'date':"c",'cost':10,'project_id':10}
@@ -133,12 +147,6 @@ def load_proj_data():
 		pass
 	return ""
 
-@app.route('/add_project', methods=['POST'])
-def add_project():
-	#Add the project here to the Database
-	
-	
-	return "SUCCESS"
 
 @app.route('/contractor/<uname>', methods=['GET'])
 @login_required
