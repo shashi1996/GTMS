@@ -102,18 +102,20 @@ def addProject():
 		else:
 			return "Error saving data"
 	return "Access denied" 
-
-@app.route("/project/id/<project>", methods=['GET'])
-def showProject(project):
+'''
+@app.route("/project/id/<id>", methods=['GET'])
+def showProject(id):
 	data = Database.getProject(project)
 	if data is not False:
 		return jsonify(data)
 	else:
 		return "Project not found"
+'''
 
 @app.route('/project/title/<pname>', methods=['GET'])
 def disp_project(pname):
 	#get project by project name
+	data = Database.getProject(pname)
 	'''
 	if curent_user.access == "admin":
 		#if allocated send updates and specify type
