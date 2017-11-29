@@ -124,11 +124,13 @@ def disp_project(pname):
 			type='a'
 		else:#else send tenders and specify type
 			type='w'
+			#tenders = Database.
+			
 	else:
 		#dont send data but send 'contractor' as type
 		type='c'
-	
-	return render_template('proj_info.html', project = data)
+	print(type)
+	return render_template('proj_info.html', project = data, type= type, updates=updates, tenders=tenders)
 	
 @app.route('/check', methods=['POST'])
 def checkbid():
