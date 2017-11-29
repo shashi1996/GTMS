@@ -114,11 +114,28 @@ class Database():
             return json.dumps(data)
         else:
             return []
+    
     def getContractor(uname):
         cur = mysql.connection.cursor()
         cur.execute("select * from vender where username = '"+uname+"'")
         data = cur.fetchone()
         return data
+    
+    def getBid(cname):
+        result = []
+        cur = mysql.connection.cursor()
+    #Get All bids made by the user
+        cur.execute("select * from bidding where vender_id in (select vender_id from vender where username = '"+cname+"')")
+        data = cur.fetchall()
+        for i,d in enumerate(data):
+            temp=[]
+            cur.execute("select title from project where project_id = '"+str(d[3])+"'")
+            temp.append(cur.fetchone()[0])
+            cur.execute("select est_amt,tender_pub_date,tender_active from tender where tender_id = '"+str(d[2])+"'")
+            temp.extend(list(cur.fetchone()))
+            result.append(temp)
+            print(result)
+        return result
     
 '''
     def search_by_state(data)
