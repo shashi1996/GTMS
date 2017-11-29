@@ -3,7 +3,7 @@ from flask import request
 from flask_login import login_user, logout_user, login_required, current_user
 from app import app
 from app.models import User, Database, load_user
-
+import json
 from . import mysql
 
 @app.route('/')
@@ -157,5 +157,15 @@ def contractor(uname):
         data = Database.getContractor(uname)
         if len(data)==0:
             return "User not found",404
-        return render_template("contractor.html")
+        return render_template("contractor.html",data = json.dumps(data))
+    return "Invalid access",401
+
+@app.route('/getBid/<cname>')
+@login_required
+def getBid(cname):
+    if current_user.access == "admin" or current_user.username == cname:
+        data = Database.getBid(cname)
+        if len(data) == 0:
+            return jsonify([])
+        return jsonify(data)
     return "Invalid access",401

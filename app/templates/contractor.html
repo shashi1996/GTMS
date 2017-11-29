@@ -7,45 +7,39 @@
 		// app call to server side;
 		console.log("fire Project");
 	}
-	$(document).ready(function(){
-		 $.ajax({
-				url: "con_details.php",
-				type: "GET",
-				data: '',
-				success: function(data) {
-				
-					 info = JSON.parse(data);
-					 //console.log(info);
-					 console.log(info.Name);
-					 $('#name_c').html(info.Name);
-					 $('#mobile_c').html(info.Mobile);
-					 $('#pan_c').html(info.PAN);
-					 $('#tan_c').html(info.TANN);
-					 $('#vat_c').html(info.VAT);
-					 
-				},
-				error: function(data) {
-					console.log(data);
-					console.log("something went wrong");
-				} 			
-	    });
+	function loadData(){
+		info = JSON.parse({{data|tojson|safe}});	
+		$('#name_c').html(info[5]);
+		$('#mobile_c').html(info[6]);
+		$('#pan_c').html(info[7]);
+		$('#tan_c').html(info[8]);
+		$('#vat_c').html(info[9]);
 		
+	}
+	function openProject(pname){
+		window.location="/project/"+pname
+
+	}
+	$(document).ready(function(){
+		loadData();
+		var re = new RegExp('/[a-zA-Z]*$');
 		$.ajax({
-				url: "contractor_project.php",
+				url: "/getBid"+window.location.href.substring(window.location.href.search(re)),
 				type: "GET",
 				data: '',
 				success: function(data) {
-					//console.log("works");
-					info = JSON.parse(data);
-					//console.log(info);
-					
-					$.each(info, function (i, elem) {
-						con = "";
-						con += "<tr id ="+elem.Tno+" onclick = 'fireProject()' style = 'cursor: pointer;'>"+"<td>"+elem.Tno+"</td>"+"<td>"+elem.date+"</td>"+"<td>"+elem.tender+"</td>"+"<td>"+elem.org+"</td>"+"</tr>";
-						$('#avail_tend').append(con);
-						//console.log(elem.date);
-						//console.log(elem.tender);
-						//console.log(elem.org);
+//					console.log(data)
+					$.each(data, function (i, elem) {
+						tr = $("<tr></tr>",{style:'cursor:pointer;'});
+						tr.click(function(){window.location="/project/"+elem[0]})
+						project = $("<td></td>").text(elem[0]);
+						d = new Date(Date.parse(elem[2]))
+						date = $("<td></td>").text(d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear());
+						amt = $("<td></td>").text(elem[1]);
+						stat = $("<td></td>").text(elem[3]);
+						tr.append(project,date,amt,stat);
+						$('#proj_bid').append(tr);
+						
 					});
 					 
 				},
@@ -55,7 +49,7 @@
 				} 			
 	    });
 		
-		
+		/*
 		$.ajax({
 				url: "project_bid.php",
 				type: "GET",
@@ -76,11 +70,16 @@
 					console.log(data);
 					console.log("something went wrong");
 				} 			
-	    });
+	    });*/
 	});
 	
 	
 	</script>
+	<style type="text/css">
+		#project_bid{
+			margin-top:20px;
+		}
+	</style>
 {% endblock %}
 {% block body %}
 
@@ -116,14 +115,18 @@
 			</tbody>
 		  </table>
 		  </div>
+		 </div>
+		</div>
+		<div class="row">
+		  <div class="col-md-8">
 		  <div id = "project_bid">
+		  <h2>Projects</h2>
 		  <table class="table" id="proj_bid" >
 			<thead>
 			  <tr>
-				<th>Tender No.</th>
+				<th>Project.</th>
 				<th style ="width:20%;">Date</th>
-				<th>Tender</th>
-				<th>Organization</th>
+				<th>Amount</th>
 				<th>Status</th>
 			  </tr>
 			</thead>
@@ -131,24 +134,6 @@
 			</tbody>
 		  </table>
 		  </div>
-		  
-		  </br>
-		  <div id = "current_proj">
-		  <table class="table" id="avail_tend" >
-			<thead>
-			  <tr>
-				<th>Tender No.</th>
-				<th style ="width:20%;">Date</th>
-				<th>Tender</th>
-				<th>Organization</th>
-			  </tr>
-			</thead>
-			<tbody >
-			</tbody>
-		  </table>
-		  </div>
-
-
       </div>
       <!-- /.row -->
 
