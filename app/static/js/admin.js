@@ -34,15 +34,19 @@ function load_waiting_proj(data){
 	loadProjectData(data, document.getElementById('wait_table'))
 }
 function loadProjectData(t, tab){
+	alert(data)
 	data = JSON.parse(t)
 	for(i=0; i<data.length; ++i){
+		a = document.createElement('a')
+		a.href = "/project/"+data[i][0]
 		tr = document.createElement('tr')
 		for (var j=0; j<7; ++j){
 			td = document.createElement('td')
 			td.appendChild(document.createTextNode(data[i][j]))
 			tr.appendChild(td)
 		}
-		tab.appendChild(tr)
+		a.appendChild(tr)
+		tab.appendChild(a)
 	}
 }
 
@@ -77,7 +81,7 @@ function update_success(text){
 			td.appendChild(document.createTextNode(data[i][j]))
 			tr.appendChild(td)
 		}
-		tab.appendChild(tr)
+		d.appendChild(tr)
 	}
 }
 
@@ -91,7 +95,7 @@ function add_project(){
 	d7 = document.getElementById('desc').value
 	data = {'title':d1, 'state':d2, 'district':d3, 'project_category':d4, 'bid_start_date':d5, 'bid_end_date':d6, 'project_desc':d7}
 	$.ajax({
-		url: "/add_project",
+		url: "/addproject",
 		data:  JSON.stringify(data),
 		type: "POST",
 		contentType: 'application/json;charset=UTF-8',		

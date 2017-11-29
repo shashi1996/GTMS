@@ -75,10 +75,10 @@ class Database():
             return False
         return True
 
-    def getProject(project_id):
+    def getProject(title):
         cur = mysql.connection.cursor()
         try:
-            cur.execute("Select * from project where project_id = '"+project_id+"'")
+            cur.execute("Select * from project where title = '"+title+"'")
             data = cur.fetchone()
             return data
         except Exception as e:
